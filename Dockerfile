@@ -18,6 +18,9 @@ RUN npm ci
 # Bundle app source
 COPY --chown=node:node . .
 
+# Set NODE_ENV environment variable
+ENV NODE_ENV development
+
 # Use the node user from the image (instead of the root user)
 USER node
 
