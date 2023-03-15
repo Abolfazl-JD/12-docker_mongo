@@ -1,10 +1,19 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { FriendsModule } from './friends/friends.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://root:password123@database:27017'),
+    ConfigModule.forRoot({
+      isGlobal: true
+    }),
+    MongooseModule.forRootAsync({
+      useFactory: (configService: ConfigService) => ({
+          uri : configService.get<string>('MONGO_URI')
+      }),
+      inject: [ConfigService]
+    }),
     FriendsModule
   ],
 })
