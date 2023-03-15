@@ -3,6 +3,7 @@ services:
   server:
     depends_on:
       - database
+      - redis
     env_file:
       - .env
 
@@ -17,5 +18,16 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=abolfazl
       - MONGO_INITDB_ROOT_PASSWORD=lvrp1383
 
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - test_redis_data:/data
+    environment:
+      - REDIS_PASSWORD=redis1383
+
 volumes:
   mongo-db:
+  test_redis_data:
